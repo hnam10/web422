@@ -22,6 +22,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+console.log("server.js")
 // Initialize MoviesDB and connect to the database
 const db = new MoviesDB();
 db.initialize(process.env.MONGODB_CONN_STRING)
