@@ -17,6 +17,7 @@ const MoviesDB = require('./modules/moviesDB.js'); // Import the MoviesDB module
 
 // Initialize the app
 const app = express();
+const port = process.env.PORT || 3000;
 
 // Middleware
 app.use(cors());
@@ -27,12 +28,13 @@ console.log("server.js")
 const db = new MoviesDB();
 db.initialize(process.env.MONGODB_CONN_STRING)
     .then(() => {
-        console.log('Connected to MongoDB');
+        app.listen(port, () => {
+            console.log(`Server listening on: ${port}`);
+        });
     })
     .catch((err) => {
-        console.error('Error connecting to MongoDB:', err.message);
+        console.log(err);
     });
-
 // Routes
 
 // Root route
@@ -110,10 +112,4 @@ app.delete('/api/movies/:id', async (req, res) => {
 app.post('/data', (req, res) => {
     console.log(req.body); // Access parsed JSON from the request body
     res.json({ message: 'Data received', data: req.body });
-});
-
-// Start the server
-const port = process.env.PORT || 3000;
-app.listen(port, () => {
-    console.log(`Server running on http://localhost:${port}`);
 });

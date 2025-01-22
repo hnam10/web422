@@ -42,26 +42,25 @@ const movieSchema = new Schema({
 
 module.exports = class MoviesDB {
   constructor() {
-    console.log("constructor")
     // We don't have a `Movie` object until initialize() is complete
     this.Movie = null;
   }
 
   // Pass the connection string to `initialize()`
   initialize(connectionString) {
-    console.log("initialize")
     return new Promise((resolve, reject) => {
       const db = mongoose.createConnection(
-        connectionString
+        connectionString,
+        {
+          useNewUrlParser: true,
+          useUnifiedTopology: true
+        }
       );
 
       db.once('error', (err) => {
-        console.log(err.message)
-
         reject(err);
       });
       db.once('open', () => {
-        console.log("connected")
         this.Movie = db.model("movies", movieSchema);
         resolve();
       });
