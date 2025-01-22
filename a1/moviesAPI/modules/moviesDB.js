@@ -56,9 +56,12 @@ module.exports = class MoviesDB {
       );
 
       db.once('error', (err) => {
+        console.log(err.message)
+
         reject(err);
       });
       db.once('open', () => {
+        console.log("connected")
         this.Movie = db.model("movies", movieSchema);
         resolve();
       });
