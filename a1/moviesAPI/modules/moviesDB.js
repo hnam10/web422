@@ -52,11 +52,7 @@ module.exports = class MoviesDB {
     console.log("initialize")
     return new Promise((resolve, reject) => {
       const db = mongoose.createConnection(
-        connectionString,
-        {
-          useNewUrlParser: true,
-          useUnifiedTopology: true
-        }
+        connectionString
       );
 
       db.once('error', (err) => {
